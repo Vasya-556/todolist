@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'main',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISION_CLASSES': [
+        'rest_framework.permissions.AllowAny'
+    ]
+}
 
 CORS_ORIGIN_ALLOW_ALL = True
 
