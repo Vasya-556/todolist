@@ -12,3 +12,9 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = ['author', 'title', 'description', 'time_create', 'time_update', 'dead_line', 'status']
+    
+    def create(self, validated_data):
+        author_data = validated_data.pop('author')  
+        author, _ = User.objects.get_or_create(**author_data)  
+        task = Task.objects.create(author=author, **validated_data) 
+        return task
