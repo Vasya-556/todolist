@@ -2,8 +2,11 @@ from django.shortcuts import render
 from django.views.generic import ListView
 from .models import *
 from rest_framework.views import APIView
+from rest_framework.generics import CreateAPIView, UpdateAPIView
 from .serializer import *
 from rest_framework.response import Response
+from rest_framework import status
+from .forms import *
 
 def index(request):
     return render(request,'main/index.html')
@@ -24,3 +27,11 @@ class TaskView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
+
+class CreateTaskView(CreateAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+
+class UpdateTaskView(UpdateAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
