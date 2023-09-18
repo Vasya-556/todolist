@@ -5,16 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, UpdateAPIView
 from .serializer import *
 from rest_framework.response import Response
-from rest_framework import status
 from .forms import *
-
-def index(request):
-    return render(request,'main/index.html')
-
-class Main(ListView):
-    model = Task
-    template_name = 'main/index.html'
-    context_object_name = 'tasks'
 
 class TaskView(APIView):
     def get(self, request):
