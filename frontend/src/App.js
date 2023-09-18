@@ -1,6 +1,8 @@
 import './App.css';
 import axios from 'axios';
 import React from 'react';
+import AddTask from './AddTask';
+import TaskList from './TaskList';
 
 class App extends React.Component{
   state = { details: [], }
@@ -21,20 +23,8 @@ class App extends React.Component{
   render() {
     return (
       <div>
-        <header>Data from Django</header>
-        <hr></hr>
-        {this.state.details.map((output, id) => (
-          <div key={id}>
-            <div>
-              <h2>{output.title}</h2>
-              <p>{output.description}</p>
-              <p>{output.time_create}</p>
-              <p>{output.time_update}</p>
-              <p>{output.dead_line}</p>
-              <p>{output.status}</p>
-            </div>
-          </div>
-        ))}  
+        <AddTask></AddTask>
+        <TaskList></TaskList>
       </div>
     )
   }
