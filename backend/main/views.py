@@ -6,6 +6,17 @@ from rest_framework.generics import CreateAPIView, UpdateAPIView
 from .serializer import *
 from rest_framework.response import Response
 from .forms import *
+from rest_framework import status
+
+class RemoveTaskView(APIView):
+    def delete(self, request, pk):
+        try:
+            task = Task.objects.get(pk=pk)
+        except Task.DoesNotExist:
+            return Response({'detail': 'Task not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        task.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class TaskView(APIView):
     def get(self, request):
@@ -26,3 +37,13 @@ class CreateTaskView(CreateAPIView):
 class UpdateTaskView(UpdateAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)  
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
